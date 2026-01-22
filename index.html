@@ -2,260 +2,137 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lord AI Singularity</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #0a0c14;
-      --surface: #111827;
-      --text: #e5e7eb;
-      --accent: #8b5cf6;
-      --accent-hover: #a78bfa;
-      --user: #3b82f6;
-      --border: #1e293b;
-      --error: #f87171;
-      --radius: 1.25rem;
-      --gap: 1rem;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      padding: 1rem;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .logo {
-      font-size: clamp(1.4rem, 6vw, 1.8rem);
-      font-weight: 700;
-      background: linear-gradient(90deg, var(--accent), var(--accent-hover));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    main {
-      flex: 1;
-      width: 100%;
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0.8rem 0.6rem;
-      display: flex;
-      flex-direction: column;
-    }
-    #messages {
-      flex: 1;
-      overflow-y: auto;
-      padding-bottom: 1.2rem;
-      display: flex;
-      flex-direction: column;
-      gap: var(--gap);
-    }
-    .message {
-      max-width: 92%;
-      padding: 1rem 1.3rem;
-      border-radius: var(--radius);
-      line-height: 1.5;
-      font-size: clamp(0.98rem, 3.8vw, 1.08rem);
-    }
-    .message.user {
-      align-self: flex-end;
-      background: var(--user);
-      color: white;
-      border-bottom-right-radius: 0.5rem;
-    }
-    .message.ai, .message.loading {
-      align-self: flex-start;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-bottom-left-radius: 0.5rem;
-    }
-    .message.error {
-      align-self: center;
-      background: rgba(248,113,113,0.15);
-      color: var(--error);
-      border: 1px solid rgba(248,113,113,0.4);
-      text-align: center;
-      max-width: 95%;
-    }
-    .input-area {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      padding: 0.8rem 0.6rem;
-      display: flex;
-      gap: 0.6rem;
-      position: sticky;
-      bottom: 0;
-      z-index: 5;
-    }
-    #input {
-      flex: 1;
-      padding: 0.95rem 1.2rem;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--bg);
-      color: var(--text);
-      font-size: clamp(1.02rem, 4.2vw, 1.12rem);
-      outline: none;
-      min-height: 52px;
-    }
-    #input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
-    }
-    #send {
-      padding: 0 1.5rem;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 999px;
-      font-weight: 600;
-      font-size: 1.02rem;
-      cursor: pointer;
-      min-width: 90px;
-      min-height: 52px;
-    }
-    #send:hover:not(:disabled) { background: var(--accent-hover); }
-    #send:disabled { opacity: 0.6; cursor: not-allowed; }
-    footer {
-      padding: 1rem;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      text-align: center;
-      font-size: 0.9rem;
-      color: #9ca3af;
-    }
-    .tg-links a {
-      color: var(--accent);
-      text-decoration: none;
-      margin: 0 0.8rem;
-    }
-    .tg-links a:hover { text-decoration: underline; }
-    @media (min-width: 640px) {
-      .message { max-width: 75%; }
-      main { padding: 1rem 1.2rem; }
-      .input-area { padding: 1rem 1.2rem; gap: 1rem; }
-    }
+    :root { --bg:#0f0f17; --surface:#1a1f2e; --text:#e0e7ff; --accent:#7c3aed; --user:#4f46e5; --error:#ef4444; }
+    body { margin:0; font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; }
+    header { padding:1rem; background:var(--surface); text-align:center; position:sticky; top:0; z-index:10; border-bottom:1px solid #2d3748; }
+    .logo { font-size:1.6rem; font-weight:700; color:var(--accent); }
+    main { flex:1; max-width:900px; margin:0 auto; width:100%; padding:1rem 0.8rem; display:flex; flex-direction:column; }
+    #messages { flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:1rem; padding-bottom:1rem; }
+    .message { max-width:90%; padding:1rem 1.2rem; border-radius:1.2rem; line-height:1.5; }
+    .message.user { align-self:flex-end; background:var(--user); color:white; border-bottom-right-radius:0.4rem; }
+    .message.ai, .loading { align-self:flex-start; background:var(--surface); border:1px solid #2d3748; border-bottom-left-radius:0.4rem; }
+    .error { align-self:center; background:rgba(239,68,68,0.15); color:var(--error); border:1px solid rgba(239,68,68,0.4); text-align:center; }
+    .input-area { background:var(--surface); border-top:1px solid #2d3748; padding:0.8rem; display:flex; gap:0.6rem; position:sticky; bottom:0; }
+    #input { flex:1; padding:0.9rem 1.2rem; border:1px solid #2d3748; border-radius:999px; background:var(--bg); color:var(--text); font-size:1.05rem; outline:none; }
+    #input:focus { border-color:var(--accent); }
+    #send { padding:0.9rem 1.6rem; background:var(--accent); color:white; border:none; border-radius:999px; font-weight:600; cursor:pointer; }
+    #send:disabled { opacity:0.5; cursor:not-allowed; }
+    footer { padding:1rem; text-align:center; background:var(--surface); border-top:1px solid #2d3748; font-size:0.9rem; }
+    footer a { color:var(--accent); margin:0 1rem; text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">Lord AI Singularity</div>
-  </header>
+  <header><div class="logo">Lord AI Singularity</div></header>
 
   <main>
     <div id="messages">
-      <div class="message ai">✨ Hoş geldin! Sor bakalım... 🚀</div>
+      <div class="message ai">Merhaba! Ne sormak istersin? 🚀</div>
     </div>
 
     <div class="input-area">
-      <input id="input" placeholder="Mesaj yaz..." autocomplete="off" autofocus />
+      <input id="input" placeholder="Yaz bakalım..." autocomplete="off" autofocus/>
       <button id="send">Gönder</button>
     </div>
   </main>
 
   <footer>
-    <div class="tg-links">
-      <a href="https://t.me/lordsystemv3" target="_blank">📢 LORD V3 Kanal</a>
-      <a href="https://t.me/LordDestekHat" target="_blank">🛠️ Destek</a>
-    </div>
+    <a href="https://t.me/lordsystemv3" target="_blank">📢 Kanal</a>
+    <a href="https://t.me/LordDestekHat" target="_blank">🛠️ Destek</a>
   </footer>
 
   <script>
-    // Stabil proxy: allorigins.win/raw (2026'da hala aktif ve limitsiz çalışan en iyilerden)
-    const PROXY_PREFIX = "https://api.allorigins.win/raw?url=";
-    const API_BASE = "https://lordageichatsohbet.onrender.com/api";
+    const API_URL = "https://lordageichatsohbet.onrender.com/api";
     const API_KEY = "LORD-BB8B7004";
 
-    const messagesDiv = document.getElementById("messages");
+    const messages = document.getElementById("messages");
     const input = document.getElementById("input");
     const sendBtn = document.getElementById("send");
 
-    function addMessage(content, className = "ai") {
-      const msg = document.createElement("div");
-      msg.className = `message ${className}`;
-      msg.innerHTML = content
-        .replace(/\n/g, "<br>")
-        .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-        .replace(/\*(.*?)\*/g, "<em>$1</em>");
-      messagesDiv.appendChild(msg);
-      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    function addMessage(text, type = "ai") {
+      const div = document.createElement("div");
+      div.className = `message ${type}`;
+      div.innerHTML = text.replace(/\n/g, "<br>");
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
     }
 
-    function showError(text) {
-      addMessage(text, "error");
+    function showError(msg) {
+      addMessage(msg, "error");
     }
 
     async function sendMessage() {
-      const text = input.value.trim();
-      if (!text) return;
+      const query = input.value.trim();
+      if (!query) return;
 
-      addMessage(text, "user");
+      addMessage(query, "user");
       input.value = "";
       sendBtn.disabled = true;
 
       const loading = document.createElement("div");
       loading.className = "message loading";
       loading.textContent = "Biraz bekleyin, sunucumuz ağır çalışıyor...";
-      messagesDiv.appendChild(loading);
-      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      messages.appendChild(loading);
+      messages.scrollTop = messages.scrollHeight;
 
-      const MAX_RETRIES = 4;
-      let tries = 0;
-      let success = false;
+      const MAX_RETRIES = 5; // artırdım, daha toleranslı
+      let attempt = 0;
 
-      while (tries < MAX_RETRIES && !success) {
-        tries++;
+      while (attempt < MAX_RETRIES) {
+        attempt++;
         try {
-          const targetUrl = `\( {API_BASE}?key= \){API_KEY}&q=${encodeURIComponent(text)}`;
-          const proxyUrl = PROXY_PREFIX + encodeURIComponent(targetUrl);
+          const url = `\( {API_URL}?key= \){API_KEY}&q=${encodeURIComponent(query)}`;
+          console.log(`Deneme ${attempt}: ${url}`);
 
-          const res = await fetch(proxyUrl);
+          const res = await fetch(url, { cache: "no-store" });
+
+          console.log(`Status: ${res.status}`);
 
           if (!res.ok) {
-            if ((res.status === 404 || res.status === 503 || res.status === 429) && tries < MAX_RETRIES) {
-              loading.textContent = `Biraz bekleyin, sunucumuz ağır çalışıyor... (\( {tries}/ \){MAX_RETRIES})`;
-              await new Promise(r => setTimeout(r, 5000)); // 5 sn bekle
+            if ([404, 503, 504].includes(res.status) && attempt < MAX_RETRIES) {
+              loading.textContent = `Sunucu hazırlanıyor, biraz bekleyin... (\( {attempt}/ \){MAX_RETRIES})`;
+              await new Promise(r => setTimeout(r, 5000)); // 5 sn
               continue;
             }
-            throw new Error(`Sunucu yanıtı: ${res.status}`);
+            throw new Error(`Sunucu hatası: ${res.status}`);
           }
 
           const raw = await res.text();
+          console.log("Ham cevap:", raw.substring(0, 300)); // debug
+
           let data;
           try {
-            data = JSON.parse(raw.trim());
+            data = JSON.parse(raw.trim().replace(/^\uFEFF/, ''));
           } catch (parseErr) {
-            throw new Error("Cevap bozuk: " + parseErr.message);
+            console.error("Parse hatası:", parseErr);
+            throw new Error("Cevap bozuk geldi");
           }
 
           loading.remove();
 
           if (data.status === "success" && data.response) {
             addMessage(data.response, "ai");
-            success = true;
+            sendBtn.disabled = false;
+            input.focus();
+            return;
           } else if (data.error) {
-            showError("API hatası: " + data.error);
+            showError("API Hatası: " + data.error);
+            break;
           } else {
-            showError("Beklenmedik cevap formatı");
+            showError("Beklenmedik format");
+            break;
           }
 
         } catch (err) {
-          if (tries === MAX_RETRIES) {
+          console.error("Hata:", err);
+          if (attempt === MAX_RETRIES) {
             loading.remove();
-            showError("Şu an sunucuya ulaşamıyoruz. 1-2 dakika sonra tekrar dene veya Telegram'dan destek al.");
+            showError("Sunucuya ulaşılamıyor. Render yavaş uyanıyor olabilir veya key/bakiye sorunu var. Telegram'a bak.");
           }
         }
       }
